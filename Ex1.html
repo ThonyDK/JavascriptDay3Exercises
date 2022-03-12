@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input id="input">
+<button id="oneclick">
+    Get User
+</button>
+
+<table>
+        <tr>
+            <th>name</th>
+            <th>Phone</th>
+        </tr>
+        <tr>
+            <td id="name"></td>
+            <td id="phone"></td>
+        </tr>
+</table>
+
+<!--P tagget er lavet for at vi får noget visualt frem på clienten -->
+<!--Se p tagget som en form container som er skillettet. -->
+<!--I Javascript funktionen putter vi dataen ind som vi får fra url-->
+<!--Så fetcher vi dataen.  -->
+<p id="showdata">
+    <!--Det er her dataen kommer til at være-->
+</p>
+
+<script>
+    //DOM tager vi ID fra button og addEventListerner(Laver oneclick funktion efter af arrowfunction)
+    document.getElementById('oneclick').addEventListener('click', () => { //Der skal være en tom () foran pilen, det har den brug for at virke.
+        //Her tager vi input fra clienten fx. 1 og gemmer i value.
+        let userId = document.getElementById('input').value
+        //Her tager vi URL'en med brugerne og + userId ovenfor for at det fx er bruger 1 som bliver vist.
+        let url = 'https://jsonplaceholder.typicode.com/users/' + userId
+        //Fetch bruges til at hente noget data fx fra en URL som i denne opgave.
+        fetch(url)
+            .then(res => res.json()) //for this exercise, just do this
+            .then(data => {
+                <!--Dom manipulere vi så vi tager dataen og sætter den op på P-tagget -->
+                <!--getElementById referer til P-tagget og innerText siger at dataen skal indsættes inde i P-tagget -->
+                <!--Data.name er at vi gerne vil have data i form af et navn, som vil blive vist på clienten -->
+                //document.getElementById('showdata').innerText = data.name
+                document.getElementById('name').innerText = data.name
+                document.getElementById('phone').innerText = data.phone
+                // Inside this callback, AND ONLY HERE the response data is available
+                console.log("data",data);
+                /* data now contains the response, converted to JavaScript
+                   Observe the output from the log-output above
+                   Now, just build your DOM changes using the data inside this block*/
+            })
+    })
+    /*
+    let url = 'https://jsonplaceholder.typicode.com/users/1'
+    fetch(url)
+        .then(res => res.json()) //for this exercise, just do this
+        .then(data => {
+            <!--Dom manipulere vi så vi tager dataen og sætter den op på P-tagget -->
+            <!--getElementById referer til P-tagget og innerText siger at dataen skal indsættes inde i P-tagget -->
+            <!--Data.name er at vi gerne vil have data i form af et navn, som vil blive vist på clienten -->
+            //document.getElementById('showdata').innerText = data.name
+            document.getElementById('name').innerText = data.name
+            document.getElementById('phone').innerText = data.phone
+            // Inside this callback, AND ONLY HERE the response data is available
+            console.log("data",data);
+            /* data now contains the response, converted to JavaScript
+               Observe the output from the log-output above
+               Now, just build your DOM changes using the data inside this block
+        })*/
+
+</script>
+
+</body>
+</html>
